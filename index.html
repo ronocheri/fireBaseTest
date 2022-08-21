@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+    <script>
+        // Import the functions you need from the SDKs you need
+//  import { initializeApp } from "firebase/app";
+ // TODO: Add SDKs for Firebase products that you want to use
+ // https://firebase.google.com/docs/web/setup#available-libraries
+ 
+ // Your web app's Firebase configuration
+ const firebaseConfig = {
+   apiKey: "AIzaSyDPBUu0L4MeLTAUcERUKifJQtm01RNG2PU",
+   authDomain: "myappnote-de6ba.firebaseapp.com",
+   databaseURL: "https://myappnote-de6ba-default-rtdb.firebaseio.com",
+   projectId: "myappnote-de6ba",
+   storageBucket: "myappnote-de6ba.appspot.com",
+   messagingSenderId: "451203518634",
+   appId: "1:451203518634:web:2f79e2500695477a23c0d3"
+ };
+ 
+ // Initialize Firebase
+ firebase.initializeApp(firebaseConfig);
+ 
+ function writeData()
+ {
+     console.log("bla")
+     firebase.database().ref("User").set(
+         {
+             userName:document.getElementById('userName').value,
+             password:document.getElementById('password').value
+ 
+         }
+     )
+ }
+ 
+ var obj;
+     function getData() {
+        firebase.database().ref("/").once('value',   function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+        console.log(childSnapshot)
+      var childKey = childSnapshot.key;
+      var childData = childSnapshot.val();
+
+      if(childKey=="User")
+      {
+        obj= childData
+
+    //     console.log(childKey)
+    //   console.log(childData)
+      }
+
+      
+
+      
+    });
+    document.getElementById("demo").innerHTML = obj["userName"]+ " "+obj["password"];
+  });
+       
+     }
+     </script>
+
+<h1>User</h1>
+<input type="text" placeholder="User Name" id="userName">
+<input type="text" placeholder="Password" id="password">
+<p id="demo"></p>
+<button onclick="writeData()">Write Data</button>
+<button onclick="getData()">Get Data</button>
+
+
+</body>
+</html>
